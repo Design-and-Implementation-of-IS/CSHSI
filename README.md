@@ -30,8 +30,6 @@ DentalCare is a university project focusing on managing a dental clinic’s oper
 - Ensure the DB path and XML files are set correctly
 
 ## 6. Authors and Credits
-- [Student Name 1]
-- [Student Name 2]
-
-## 7. License
-(MIT or other license text here)
+- Maor Amsallem
+- Razi Mreeh
+- Shahar Amit
