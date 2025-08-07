@@ -187,27 +187,22 @@ public class InventoryManager {
     public static void main(String[] args) {
         InventoryManager manager = new InventoryManager();
 
-        // Clean up before test - in case previous run failed
+        // Clean up before test
         manager.deleteItem("S123");
         manager.deleteSupplier(123);
 
-        // בדיקת Supplier
-        System.out.println("--- Testing Supplier ---");
         Supplier s = new Supplier(123, "Copilot Test", "Contact", "050-0000000", "copilot@example.com", "Tel Aviv");
-        System.out.println("Insert Supplier: " + manager.insertSupplier(s));
-        s.setName("Updated Copilot");
-        System.out.println("Update Supplier: " + manager.updateSupplier(s));
-        
-        // בדיקת Item
-        System.out.println("\n--- Testing Item ---");
         Item i = new Item("S123", "Toothbrush", "Desc", new java.util.Date(), ItemCategory.Consumables, 123);
-        System.out.println("Insert Item: " + manager.insertItem(i));
+
+        System.out.println("Insert Supplier: " + (manager.insertSupplier(s) ? "SUCCESS" : "FAIL"));
+        s.setName("Updated Copilot");
+        System.out.println("Update Supplier: " + (manager.updateSupplier(s) ? "SUCCESS" : "FAIL"));
+
+        System.out.println("Insert Item: " + (manager.insertItem(i) ? "SUCCESS" : "FAIL"));
         i.setName("Updated Toothbrush");
-        System.out.println("Update Item: " + manager.updateItem(i));
-        System.out.println("Delete Item: " + manager.deleteItem(i.getSerialNumber()));
-        
-        // Final cleanup
-        System.out.println("\n--- Final Cleanup ---");
-        System.out.println("Delete Supplier: " + manager.deleteSupplier(s.getSupplierId()));
+        System.out.println("Update Item: " + (manager.updateItem(i) ? "SUCCESS" : "FAIL"));
+        System.out.println("Delete Item: " + (manager.deleteItem(i.getSerialNumber()) ? "SUCCESS" : "FAIL"));
+
+        System.out.println("Delete Supplier: " + (manager.deleteSupplier(s.getSupplierId()) ? "SUCCESS" : "FAIL"));
     }
 }
