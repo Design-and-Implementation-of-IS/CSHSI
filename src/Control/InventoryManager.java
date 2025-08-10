@@ -7,202 +7,204 @@ import Entity.Supplier;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InventoryManager {
 
-    /**
-     * Inserts a new item into the database.
-     * @param item The item to insert.
-     * @return true if successful, false otherwise.
-     */
+    // החלפה ל-SQL ישיר: Insert Item
     public boolean insertItem(Item item) {
+        String sql = "INSERT INTO Items (itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId) VALUES (?,?,?,?,?,?)";
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_INSERT_ITEM)) {
-                
-                stmt.setString(1, item.getSerialNumber());
-                stmt.setString(2, item.getName());
-                stmt.setString(3, item.getDescription());
-                stmt.setDate(4, new java.sql.Date(item.getExpirationDate().getTime()));
-                stmt.setString(5, item.getCategory());
-                stmt.setInt(6, item.getSupplierId());
-                
-                stmt.execute();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, item.getSerialNumber());
+                ps.setString(2, item.getName());
+                ps.setString(3, item.getDescription());
+                ps.setDate(4, new java.sql.Date(item.getExpirationDate().getTime()));
+                ps.setString(5, item.getCategory());
+                ps.setInt(6, item.getSupplierId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Updates an existing item in the database.
-     * @param item The item with updated information.
-     * @return true if successful, false otherwise.
-     */
+    // החלפה ל-SQL ישיר: Update Item
     public boolean updateItem(Item item) {
+        String sql = "UPDATE Items SET itemName=?, itemDescription=?, expirationDate=?, category=?, supplierId=? WHERE itemSerialNum=?";
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_UPDATE_ITEM)) {
-                
-                stmt.setString(1, item.getName());
-                stmt.setString(2, item.getDescription());
-                stmt.setDate(3, new java.sql.Date(item.getExpirationDate().getTime()));
-                stmt.setString(4, item.getCategory());
-                stmt.setInt(5, item.getSupplierId());
-                stmt.setString(6, item.getSerialNumber()); // WHERE clause parameter
-                
-                stmt.execute();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, item.getName());
+                ps.setString(2, item.getDescription());
+                ps.setDate(3, new java.sql.Date(item.getExpirationDate().getTime()));
+                ps.setString(4, item.getCategory());
+                ps.setInt(5, item.getSupplierId());
+                ps.setString(6, item.getSerialNumber());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Deletes an item from the database by its serial number.
-     * @param serialNumber The serial number of the item to delete.
-     * @return true if successful, false otherwise.
-     */
+    // החלפה ל-SQL ישיר: Delete Item
     public boolean deleteItem(String serialNumber) {
+        String sql = "DELETE FROM Items WHERE itemSerialNum=?";
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_DELETE_ITEM_BY_SERIAL)) {
-                
-                stmt.setString(1, serialNumber);
-                
-                stmt.execute();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, serialNumber);
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Inserts a new supplier into the database.
-     * @param supplier The supplier to insert.
-     * @return true if successful, false otherwise.
-     */
+    // החלפה ל-SQL ישיר: Insert Supplier
     public boolean insertSupplier(Supplier supplier) {
+        String sql = "INSERT INTO Suppliers (supplierId,name,contactPerson,phone,email,address) VALUES (?,?,?,?,?,?)";
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_INSERT_SUPPLIER)) {
-                
-                stmt.setInt(1, supplier.getSupplierId());
-                stmt.setString(2, supplier.getName());
-                stmt.setString(3, supplier.getContactPerson());
-                stmt.setString(4, supplier.getPhone());
-                stmt.setString(5, supplier.getEmail());
-                stmt.setString(6, supplier.getAddress());
-                
-                stmt.execute();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setInt(1, supplier.getSupplierId());
+                ps.setString(2, supplier.getName());
+                ps.setString(3, supplier.getContactPerson());
+                ps.setString(4, supplier.getPhone());
+                ps.setString(5, supplier.getEmail());
+                ps.setString(6, supplier.getAddress());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Updates an existing supplier in the database.
-     * @param supplier The supplier with updated information.
-     * @return true if successful, false otherwise.
-     */
+    // נשאר כפי שביקשת: Update Supplier (SQL ישיר) – אין שינוי
     public boolean updateSupplier(Supplier supplier) {
+        String sql = "UPDATE Suppliers SET name=?, contactPerson=?, phone=?, email=?, address=? WHERE supplierId=?";
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
             try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_UPDATE_SUPPLIER)) {
-                
-                stmt.setString(1, supplier.getName());
-                stmt.setString(2, supplier.getContactPerson());
-                stmt.setString(3, supplier.getPhone());
-                stmt.setString(4, supplier.getEmail());
-                stmt.setString(5, supplier.getAddress());
-                stmt.setInt(6, supplier.getSupplierId()); // WHERE clause parameter
-                
-                stmt.execute();
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, supplier.getName());
+                ps.setString(2, supplier.getContactPerson());
+                ps.setString(3, supplier.getPhone());
+                ps.setString(4, supplier.getEmail());
+                ps.setString(5, supplier.getAddress());
+                ps.setInt(6, supplier.getSupplierId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Deletes a supplier from the database by its ID.
-     * @param supplierId The ID of the supplier to delete.
-     * @return true if successful, false otherwise.
-     */
+    // שימוש ב-Q_delete_supplier (CALLABLE) בלבד לפי בקשתך
     public boolean deleteSupplier(int supplierId) {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-                 CallableStatement stmt = conn.prepareCall(Consts.QUERY_DELETE_SUPPLIER)) {
-                
-                stmt.setInt(1, supplierId);
-                
-                stmt.execute();
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 CallableStatement cs = c.prepareCall(Consts.QUERY_DELETE_SUPPLIER)) {
+                cs.setInt(1, supplierId);
+                cs.execute();
                 return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+            } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * Main method for testing the InventoryManager functionality.
-     */
+    // הדפסת פרטי ספק (לבדיקות)
+    private void printSupplier(int id) {
+        String sql = "SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?";
+        try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("Supplier[" + rs.getInt(1) + "] -> " +
+                            rs.getString(2) + " | " + rs.getString(3) + " | " +
+                            rs.getString(4) + " | " + rs.getString(5) + " | " + rs.getString(6));
+                } else System.out.println("Supplier " + id + " not found.");
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    // הדפסת פרטי פריט (לבדיקות)
+    private void printItem(String serial) {
+        String sql = "SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?";
+        try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, serial);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("Item[" + rs.getString(1) + "] -> " +
+                            rs.getString(2) + " | " + rs.getString(3) + " | " +
+                            rs.getDate(4) + " | " + rs.getString(5) + " | supp=" + rs.getInt(6));
+                } else System.out.println("Item " + serial + " not found.");
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    // MAIN בדיקות נפרדות – הפעל TRUE רק למה שרוצים לבדוק
     public static void main(String[] args) {
-        InventoryManager manager = new InventoryManager();
+        InventoryManager m = new InventoryManager();
 
-        // Clean up before test
-        manager.deleteItem("S123");
-        manager.deleteSupplier(123);
+        boolean TEST_INSERT_SUPPLIER = true;
+        boolean TEST_UPDATE_SUPPLIER = true;      
+        boolean TEST_DELETE_SUPPLIER = true;
+        boolean TEST_INSERT_ITEM = true;
+        boolean TEST_UPDATE_ITEM = true;
+        boolean TEST_DELETE_ITEM = true;
 
-        Supplier s = new Supplier(123, "Copilot Test", "Contact", "050-0000000", "copilot@example.com", "Tel Aviv");
-        Item i = new Item("S123", "Toothbrush", "Desc", new java.util.Date(), ItemCategory.Consumables, 123);
+        // 1. Insert Supplier
+        if (TEST_INSERT_SUPPLIER) {
+            Supplier ns = new Supplier(99, "Temp Supplier", "Temp Person", "050-1111111",
+                    "temp@supp.com", "Temp Address 1");
+            System.out.println("Insert Supplier(99): " + (m.insertSupplier(ns) ? "SUCCESS" : "FAIL"));
+            m.printSupplier(99);
+        }
 
-        System.out.println("Insert Supplier: " + (manager.insertSupplier(s) ? "SUCCESS" : "FAIL"));
-        s.setName("Updated Copilot");
-        System.out.println("Update Supplier: " + (manager.updateSupplier(s) ? "SUCCESS" : "FAIL"));
+         // 2. Update Supplier (id=2)
+        if (TEST_UPDATE_SUPPLIER) {
+            int id = 2;
+            System.out.println("Before update supplier " + id + ":");
+            m.printSupplier(id);
+            Supplier updated = new Supplier(id,
+                    "SmileTools International",
+                    "Alice Levi",
+                    "234-5678901",
+                    "alice@smiletools.com",
+                    "456 Park Ave, Suite 10");
+            System.out.println("Update Supplier ID=" + id + ": " + (m.updateSupplier(updated) ? "SUCCESS" : "FAIL"));
+            System.out.println("After update supplier " + id + ":");
+            m.printSupplier(id);
+        }
 
-        System.out.println("Insert Item: " + (manager.insertItem(i) ? "SUCCESS" : "FAIL"));
-        i.setName("Updated Toothbrush");
-        System.out.println("Update Item: " + (manager.updateItem(i) ? "SUCCESS" : "FAIL"));
-        System.out.println("Delete Item: " + (manager.deleteItem(i.getSerialNumber()) ? "SUCCESS" : "FAIL"));
+         // 3. Delete Supplier (יש להשתמש ב-Q_delete_supplier)
+        if (TEST_DELETE_SUPPLIER) {
+            System.out.println("Delete Supplier(99): " + (m.deleteSupplier(99) ? "SUCCESS" : "FAIL"));
+        }
 
-        System.out.println("Delete Supplier: " + (manager.deleteSupplier(s.getSupplierId()) ? "SUCCESS" : "FAIL"));
+        // 4. Insert Item
+        if (TEST_INSERT_ITEM) {
+            Item it = new Item("1016", "Test Item", "Temporary item", new java.util.Date(),
+                    ItemCategory.Tools, 1);
+            System.out.println("Insert Item 1016: " + (m.insertItem(it) ? "SUCCESS" : "FAIL"));
+            m.printItem("1016");
+        }
+
+        // 5. Update Item
+        if (TEST_UPDATE_ITEM) {
+            // נניח שקיים פריט 1001
+            m.printItem("1001");
+            Item up = new Item("1001", "Dental Mirror PRO", "Mirror used in oral examination (PRO)",
+                    new java.util.Date(), ItemCategory.Tools, 1);
+            System.out.println("Update Item 1001: " + (m.updateItem(up) ? "SUCCESS" : "FAIL"));
+            m.printItem("1001");
+        }
+
+        // 6. Delete Item
+        if (TEST_DELETE_ITEM) {
+            System.out.println("Delete Item 1016: " + (m.deleteItem("1016") ? "SUCCESS" : "FAIL"));
+            m.printItem("1016");
+        }
     }
 }
