@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryManager {
 
@@ -109,6 +111,108 @@ public class InventoryManager {
                 return true;
             } catch (SQLException e) { e.printStackTrace(); return false; }
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
+    }
+
+    /**
+     * מחזיר רשימת מספרים סידוריים של כל הפריטים (עבור קומבו בוקס)
+     * SELECT itemSerialNum FROM Items ORDER BY itemSerialNum
+     */
+    public List<String> getAllItemSerials() {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT itemSerialNum FROM Items ORDER BY itemSerialNum";
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String s = rs.getString(1);
+                    if (s != null) result.add(s);
+                }
+            } catch (SQLException e) { e.printStackTrace(); }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+        return result;
+    }
+
+    /**
+     * מחזיר פריט לפי מספר סידורי או null אם לא נמצא.
+     * SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?
+     */
+    public Item getItemBySerial(String serial) {
+        if (serial == null || serial.isEmpty()) return null;
+        String sql = "SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?";
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, serial);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String itemSerial = rs.getString("itemSerialNum");
+                        String name = rs.getString("itemName");
+                        String desc = rs.getString("itemDescription");
+                        java.util.Date exp = rs.getDate("expirationDate");
+                        String catStr = rs.getString("category");
+                        int supplierId = rs.getInt("supplierId");
+                        ItemCategory cat = null;
+                        if (catStr != null) {
+                            try { cat = ItemCategory.valueOf(catStr); }
+                            catch (IllegalArgumentException ex) { /* TODO: אם שמות הקטגוריות בבסיס הנתונים שונים מה-enum */ }
+                        }
+                        if (cat == null) cat = ItemCategory.Tools; // ברירת מחדל זהירה
+                        return new Item(itemSerial, name, desc, exp, cat, supplierId);
+                    }
+                }
+            } catch (SQLException e) { e.printStackTrace(); }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+        return null;
+    }
+
+    /**
+     * מחזיר רשימת מזהי ספקים (עבור קומבו בוקס במסך ספקים)
+     * SELECT supplierId FROM Suppliers ORDER BY supplierId
+     */
+    public List<Integer> getAllSupplierIds() {
+        List<Integer> list = new ArrayList<>();
+        String sql = "SELECT supplierId FROM Suppliers ORDER BY supplierId";
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(rs.getInt(1));
+                }
+            } catch (SQLException e) { e.printStackTrace(); }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    /**
+     * מחזיר אובייקט Supplier לפי מזהה או null אם לא נמצא.
+     * SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?
+     */
+    public Supplier getSupplierById(int supplierId) {
+        String sql = "SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?";
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            try (Connection c = DriverManager.getConnection(Consts.CONN_STR);
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setInt(1, supplierId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        int id = rs.getInt("supplierId");
+                        String name = rs.getString("name");
+                        String contact = rs.getString("contactPerson");
+                        String phone = rs.getString("phone");
+                        String email = rs.getString("email");
+                        String address = rs.getString("address");
+                        return new Supplier(id, name, contact, phone, email, address);
+                    }
+                }
+            } catch (SQLException e) { e.printStackTrace(); }
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+        return null;
     }
 
     // הדפסת פרטי ספק (לבדיקות)
