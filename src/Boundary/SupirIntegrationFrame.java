@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Map;
 
 /**
  * UI frame for Supir XML batch integration.
@@ -101,8 +102,7 @@ public class SupirIntegrationFrame extends JFrame {
                 try {
                     List<Item> missing = get();
                     for (Item it : missing) {
-                        // Item#getName returns item name, Item#getCategory returns String already
-                        model.addRow(new Object[]{it.getSerialNumber(), it.getName(), it.getSupplierId(), it.getCategory(), it.getExpirationDate()});
+                            model.addRow(new Object[]{it.getSerialNumber(), it.getName(), it.getSupplierId(), it.getCategory(), it.getExpirationDate()});
                     }
                     statusLbl.setText("Missing items loaded: " + missing.size());
                 } catch (Exception ex) {

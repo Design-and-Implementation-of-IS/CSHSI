@@ -38,7 +38,9 @@ public class SupirIntegrationManager {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.parse(f);
         doc.getDocumentElement().normalize();
-        NodeList nodes = doc.getElementsByTagName("Items");
+        Element root = doc.getDocumentElement();
+        NodeList nodes = root.getElementsByTagName("Items");
+        System.out.println("Found " + nodes.getLength() + " Items nodes in XML");
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node n = nodes.item(i);

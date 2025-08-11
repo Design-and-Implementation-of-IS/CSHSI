@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
         btnSuppliers.addActionListener(e -> openSuppliers());
     JButton btnSupir = new JButton("Supir XML Integration");
     btnSupir.addActionListener(e -> openSupir());
-    JButton btnExit = new JButton("Exit");
+        JButton btnExit = new JButton("Exit");
         btnExit.addActionListener(e -> System.exit(0));
 
         JPanel center = new JPanel();
