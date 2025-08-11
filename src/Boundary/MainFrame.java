@@ -10,6 +10,7 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     private InventoryManagementFrame inventoryFrame;
     private SupplierManagementFrame supplierFrame;
+    private SupirIntegrationFrame supirFrame;
 
     public MainFrame() {
         setTitle("DentalCare Administration");
@@ -28,7 +29,9 @@ public class MainFrame extends JFrame {
         btnInventory.addActionListener(e -> openInventory());
         JButton btnSuppliers = new JButton("Supplier Management");
         btnSuppliers.addActionListener(e -> openSuppliers());
-        JButton btnExit = new JButton("Exit");
+    JButton btnSupir = new JButton("Supir XML Integration");
+    btnSupir.addActionListener(e -> openSupir());
+    JButton btnExit = new JButton("Exit");
         btnExit.addActionListener(e -> System.exit(0));
 
         JPanel center = new JPanel();
@@ -41,6 +44,7 @@ public class MainFrame extends JFrame {
             .addComponent(title)
             .addComponent(btnInventory, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
             .addComponent(btnSuppliers, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnSupir, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
             .addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
         );
 
@@ -51,6 +55,8 @@ public class MainFrame extends JFrame {
             .addComponent(btnInventory, 40, 40, 40)
             .addGap(15)
             .addComponent(btnSuppliers, 40, 40, 40)
+            .addGap(15)
+            .addComponent(btnSupir, 40, 40, 40)
             .addGap(25)
             .addComponent(btnExit, 32, 32, 32)
             .addGap(20)
@@ -73,6 +79,14 @@ public class MainFrame extends JFrame {
         }
         supplierFrame.setVisible(true);
         supplierFrame.toFront();
+    }
+
+    private void openSupir() {
+        if (supirFrame == null || !supirFrame.isDisplayable()) {
+            supirFrame = new SupirIntegrationFrame();
+        }
+        supirFrame.setVisible(true);
+        supirFrame.toFront();
     }
 
     public static void main(String[] args) {
