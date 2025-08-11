@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot xmlns:od="urn:schemas-microsoft-com:officedata" generated="2025-08-11T19:24:54">
+<Items>
+<itemSerialNum>1001</itemSerialNum>
+<itemName>Dental Mirror</itemName>
+<itemDescription>Mirror used in oral examination</itemDescription>
+<expirationDate>2026-12-31</expirationDate>
+<category>Tools</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1002</itemSerialNum>
+<itemName>Latex Gloves</itemName>
+<itemDescription>Disposable gloves for hygiene</itemDescription>
+<expirationDate>2025-10-01</expirationDate>
+<category>Consumables</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1003</itemSerialNum>
+<itemName>Sterilization Tray</itemName>
+<itemDescription>Tray for holding tools during sterilization</itemDescription>
+<expirationDate>2027-06-15</expirationDate>
+<category>Tools</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1004</itemSerialNum>
+<itemName>X-ray Film</itemName>
+<itemDescription>Film used in dental X-rays</itemDescription>
+<expirationDate>2024-11-20</expirationDate>
+<category>Consumables</category>
+<supplierId>3</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1005</itemSerialNum>
+<itemName>Dental Probe</itemName>
+<itemDescription>Used to explore cavities</itemDescription>
+<expirationDate>2027-01-15</expirationDate>
+<category>Tools</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1006</itemSerialNum>
+<itemName>Surgical Mask</itemName>
+<itemDescription>Mask for surgical protection</itemDescription>
+<expirationDate>2025-09-30</expirationDate>
+<category>Consumables</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1007</itemSerialNum>
+<itemName>Cotton Rolls</itemName>
+<itemDescription>Used to control moisture</itemDescription>
+<expirationDate>2026-03-10</expirationDate>
+<category>Consumables</category>
+<supplierId>3</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1008</itemSerialNum>
+<itemName>Dental Drill</itemName>
+<itemDescription>Electric drill for tooth treatment</itemDescription>
+<expirationDate>2027-12-05</expirationDate>
+<category>Tools</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1009</itemSerialNum>
+<itemName>Impression Tray</itemName>
+<itemDescription>Tray to hold impression material</itemDescription>
+<expirationDate>2026-08-22</expirationDate>
+<category>Tools</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1010</itemSerialNum>
+<itemName>Dental Cement</itemName>
+<itemDescription>Material for filling teeth</itemDescription>
+<expirationDate>2025-11-11</expirationDate>
+<category>Consumables</category>
+<supplierId>3</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1011</itemSerialNum>
+<itemName>Saliva Ejector</itemName>
+<itemDescription>Removes saliva during treatment</itemDescription>
+<expirationDate>2026-04-04</expirationDate>
+<category>Consumables</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1012</itemSerialNum>
+<itemName>Scaler</itemName>
+<itemDescription>Instrument to remove plaque</itemDescription>
+<expirationDate>2026-10-12</expirationDate>
+<category>Tools</category>
+<supplierId>3</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1013</itemSerialNum>
+<itemName>Curing Light</itemName>
+<itemDescription>Light to cure resin materials</itemDescription>
+<expirationDate>2027-05-18</expirationDate>
+<category>Tools</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1014</itemSerialNum>
+<itemName>Protective Glasses</itemName>
+<itemDescription>Glasses for eye protection</itemDescription>
+<expirationDate>2026-02-20</expirationDate>
+<category>Tools</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1015</itemSerialNum>
+<itemName>Fluoride Gel</itemName>
+<itemDescription>Topical fluoride treatment</itemDescription>
+<expirationDate>2025-12-01</expirationDate>
+<category>Consumables</category>
+<supplierId>3</supplierId>
+</Items>
+<!-- New items 1016-1021 -->
+<Items>
+<itemSerialNum>1016</itemSerialNum>
+<itemName>Alginate Impression Powder</itemName>
+<itemDescription>Powder for mixing alginate to capture dental impressions</itemDescription>
+<expirationDate>2027-03-14</expirationDate>
+<category>Consumables</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1017</itemSerialNum>
+<itemName>Endodontic File Set</itemName>
+<itemDescription>Set of tapered files for canal shaping in root treatments</itemDescription>
+<expirationDate>2028-01-30</expirationDate>
+<category>Tools</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1018</itemSerialNum>
+<itemName>Disposable Syringe Tips</itemName>
+<itemDescription>Single-use tips for air and water syringes</itemDescription>
+<expirationDate>2026-11-05</expirationDate>
+<category>Consumables</category>
+<supplierId>3</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1019</itemSerialNum>
+<itemName>Retraction Cord</itemName>
+<itemDescription>Braided cord for temporary gingival retraction</itemDescription>
+<expirationDate>2027-07-21</expirationDate>
+<category>Consumables</category>
+<supplierId>1</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1020</itemSerialNum>
+<itemName>Amalgam Capsule</itemName>
+<itemDescription>Pre-dosed alloy and mercury capsule for restorative fillings</itemDescription>
+<expirationDate>2026-09-09</expirationDate>
+<category>Consumables</category>
+<supplierId>2</supplierId>
+</Items>
+<Items>
+<itemSerialNum>1021</itemSerialNum>
+<itemName>Autoclave Indicator Strips</itemName>
+<itemDescription>Chemical indicator strips verifying sterilization cycle parameters</itemDescription>
+<expirationDate>2027-12-19</expirationDate>
+<category>Tools</category>
+<supplierId>3</supplierId>
+</Items>
+</dataroot>

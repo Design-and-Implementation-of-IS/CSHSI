@@ -15,7 +15,7 @@ import java.util.List;
 
 public class InventoryManager {
 
-    // החלפה ל-SQL ישיר: Insert Item
+    //  Insert Item
     public boolean insertItem(Item item) {
         String sql = "INSERT INTO Items (itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId) VALUES (?,?,?,?,?,?)";
         try {
@@ -33,7 +33,7 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    // החלפה ל-SQL ישיר: Update Item
+    //  Update Item
     public boolean updateItem(Item item) {
         String sql = "UPDATE Items SET itemName=?, itemDescription=?, expirationDate=?, category=?, supplierId=? WHERE itemSerialNum=?";
         try {
@@ -51,7 +51,7 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    // החלפה ל-SQL ישיר: Delete Item
+    //  Delete Item
     public boolean deleteItem(String serialNumber) {
         String sql = "DELETE FROM Items WHERE itemSerialNum=?";
         try {
@@ -64,7 +64,7 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    // החלפה ל-SQL ישיר: Insert Supplier
+    //  Insert Supplier
     public boolean insertSupplier(Supplier supplier) {
         String sql = "INSERT INTO Suppliers (supplierId,name,contactPerson,phone,email,address) VALUES (?,?,?,?,?,?)";
         try {
@@ -82,7 +82,7 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    // נשאר כפי שביקשת: Update Supplier (SQL ישיר) – אין שינוי
+    //  Update Supplier 
     public boolean updateSupplier(Supplier supplier) {
         String sql = "UPDATE Suppliers SET name=?, contactPerson=?, phone=?, email=?, address=? WHERE supplierId=?";
         try {
@@ -100,7 +100,7 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    // שימוש ב-Q_delete_supplier (CALLABLE) בלבד לפי בקשתך
+    //  Delete Supplier
     public boolean deleteSupplier(int supplierId) {
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -113,11 +113,8 @@ public class InventoryManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); return false; }
     }
 
-    /**
-     * מחזיר רשימת מספרים סידוריים של כל הפריטים (עבור קומבו בוקס)
-     * SELECT itemSerialNum FROM Items ORDER BY itemSerialNum
-     */
-    public List<String> getAllItemSerials() {
+    // SELECT itemSerialNum FROM Items ORDER BY itemSerialNum
+         public List<String> getAllItemSerials() {
         List<String> result = new ArrayList<>();
         String sql = "SELECT itemSerialNum FROM Items ORDER BY itemSerialNum";
         try {
@@ -134,11 +131,8 @@ public class InventoryManager {
         return result;
     }
 
-    /**
-     * מחזיר פריט לפי מספר סידורי או null אם לא נמצא.
-     * SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?
-     */
-    public Item getItemBySerial(String serial) {
+    // SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?
+       public Item getItemBySerial(String serial) {
         if (serial == null || serial.isEmpty()) return null;
         String sql = "SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?";
         try {
@@ -168,10 +162,8 @@ public class InventoryManager {
         return null;
     }
 
-    /**
-     * מחזיר רשימת מזהי ספקים (עבור קומבו בוקס במסך ספקים)
-     * SELECT supplierId FROM Suppliers ORDER BY supplierId
-     */
+
+     // SELECT supplierId FROM Suppliers ORDER BY supplierId
     public List<Integer> getAllSupplierIds() {
         List<Integer> list = new ArrayList<>();
         String sql = "SELECT supplierId FROM Suppliers ORDER BY supplierId";
@@ -188,10 +180,8 @@ public class InventoryManager {
         return list;
     }
 
-    /**
-     * מחזיר אובייקט Supplier לפי מזהה או null אם לא נמצא.
-     * SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?
-     */
+
+    // SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?
     public Supplier getSupplierById(int supplierId) {
         String sql = "SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?";
         try {
@@ -215,7 +205,7 @@ public class InventoryManager {
         return null;
     }
 
-    // הדפסת פרטי ספק (לבדיקות)
+    // For Testing
     private void printSupplier(int id) {
         String sql = "SELECT supplierId,name,contactPerson,phone,email,address FROM Suppliers WHERE supplierId=?";
         try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
@@ -231,7 +221,7 @@ public class InventoryManager {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // הדפסת פרטי פריט (לבדיקות)
+    // For Testing
     private void printItem(String serial) {
         String sql = "SELECT itemSerialNum,itemName,itemDescription,expirationDate,category,supplierId FROM Items WHERE itemSerialNum=?";
         try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
@@ -247,16 +237,16 @@ public class InventoryManager {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // MAIN בדיקות נפרדות – הפעל TRUE רק למה שרוצים לבדוק
+    // Choose the Query by change it to "True"...
     public static void main(String[] args) {
         InventoryManager m = new InventoryManager();
 
-        boolean TEST_INSERT_SUPPLIER = true;
-        boolean TEST_UPDATE_SUPPLIER = true;      
-        boolean TEST_DELETE_SUPPLIER = true;
-        boolean TEST_INSERT_ITEM = true;
-        boolean TEST_UPDATE_ITEM = true;
-        boolean TEST_DELETE_ITEM = true;
+        boolean TEST_INSERT_SUPPLIER = false; // Change to true to test
+        boolean TEST_UPDATE_SUPPLIER = false; // Change to true to test
+        boolean TEST_DELETE_SUPPLIER = false; // Change to true to test
+        boolean TEST_INSERT_ITEM = false; // Change to true to test
+        boolean TEST_UPDATE_ITEM = false; // Change to true to test
+        boolean TEST_DELETE_ITEM = false; // Change to true to test
 
         // 1. Insert Supplier
         if (TEST_INSERT_SUPPLIER) {
@@ -282,7 +272,7 @@ public class InventoryManager {
             m.printSupplier(id);
         }
 
-         // 3. Delete Supplier (יש להשתמש ב-Q_delete_supplier)
+         // 3. Delete Supplier 
         if (TEST_DELETE_SUPPLIER) {
             System.out.println("Delete Supplier(99): " + (m.deleteSupplier(99) ? "SUCCESS" : "FAIL"));
         }
